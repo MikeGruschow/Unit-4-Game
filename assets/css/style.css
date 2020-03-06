@@ -1,5 +1,10 @@
 body {
     font-family: 'Trade Winds', cursive;
+    color: white;
+    background-image: url(/Users/mike/Unit-4-Game/assets/images/background.png);
+    background-size: cover;
+    
+
 }
 
 img {
