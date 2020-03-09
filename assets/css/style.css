@@ -1,12 +1,25 @@
 body {
-    font-family: 'Trade Winds', cursive;
-    color: white;
-    background-image: url(/Users/mike/Unit-4-Game/assets/images/background.png);
-    background-size: cover;
-    
+  background-image: url(../images/gplaypattern.png);
+}
 
+.container {
+  background-color: navy;
+  color: white;
+}
+
+h1 {
+  font-family: "Megrim", cursive;
+  font-size: 70px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+p {
+  font-family: "Megrim", cursive;
+  font-size: 25px;
 }
 
 img {
-    width: 160px;
+  width: 160px;
+  height: 160px;
 }

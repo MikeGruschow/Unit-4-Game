@@ -1,61 +1,79 @@
 $(document).ready(function() {
 
-    var characters = {
-        'kaladin': {
-            name: 'Kaladin',
-            health: 170,
-            attack: 17,
-            enemyAttack: 18,
-            imageUrl: "/Users/mike/Unit-4-Game/assets/images/kaladin.jpg"
+  //Global variables
+  var wins = 0;
+  var losses = 0;
+  $(".wins-text").text("Wins: " + wins);
+  $(".losses-text").text("Losses: " + losses);
+  
+  //Array of different gem images
+  var gemImages = ["assets/images/pinkgem.svg", "assets/images/purplegem.svg", "assets/images/tealgem.svg", "assets/images/yellowgem.svg"];
+  
+  //Assigning random number to each gem
+  function gemValues() {
 
-        },
-        'shallan': {
-            name: 'Shallan',
-            health: 140,
-            attack: 16,
-            enemyAttack: 12,
-            imageUrl: "/Users/mike/Unit-4-Game/assets/images/shallan.jpg"
+      for (var i = 0; i < gemImages.length; i++) {
+      
+          var image = $("<img>");
+          image.addClass("gem-buttons gem gem-image");
+          image.attr("src", gemImages[i]);
+          image.attr("data-letter", Math.floor(Math.random() * 12) +1);
+          $("#gems").append(image);
+      }
 
-        },
-        'jasnah': {
-            name: 'Jasnah',
-            health: 160,
-            attack: 21,
-            enemyAttack: 18,
-            imageUrl: "/Users/mike/Unit-4-Game/assets/images/jasnah.jpg"
-        },
-        'szeth': {
-            name: 'Szeth',
-            health: 150,
-            attack: 19,
-            enemyAttack: 16,
-            imageUrl: "/Users/mike/Unit-4-Game/assets/images/szeth.jpg"
-        }
-    };
+  }
 
-var selectedCharacter;
-var defender;
-var combatants = [];
-var indexofSelChar;
-var attackResult;
-var turnCounter = 1;
-var killCount = 0;
+  function playGame() {
+
+      
+      var counter = 0;
+      $(".your-guess").text("Your points: " + counter); 
+
+      //Generates random number 
+      var targetNumber = Math.floor(Math.random() * (120-19) + 19);
+          
+      //And displays it on the browser
+      $(".number-to-guess").text("Number to guess: " + targetNumber);
+          console.log(targetNumber);
+
+      //When user clicks on a gem 
+      $(".gem-buttons").on("click", function() {
+          
+      //Assigns random number to each click
+          
+          gemIsClicked = true;
+          var gemValue = ($(this).attr("data-letter"));
+          gemValue = parseInt(gemValue);
+          //Adds every click to global counter
+          counter += gemValue;
+          
+          console.log(gemValue);
+          console.log(counter);
+          
+          $(".your-guess").text("Your points: " + counter);
+          
+          if (counter === targetNumber) {
+          alert("You win!");
+          wins++;
+          $(".wins-text").text("Wins: " + wins);
+          $("#gems").empty();
+          gemValues();
+          playGame();
+          }
+          
+          else if (counter >= targetNumber) {
+          alert("You lose!");
+          losses++;
+          $(".losses-text").text("Losses: " + losses);
+          $("#gems").empty();
+          gemValues();
+          playGame();
+          }
+          
+      });
+  }
+  
+  gemValues();
+  playGame();
 
 });
-
-var renderOne = function(character, renderArea, makeChar) {
-    //character appearance, renderArea: class/id, make character string
-    var charDiv = $("<div class='character' data-name='" + character.name + "'>");
-    var charName = $("<div class='character-name'>").text(character.name);
-    var charImage = $("<div class='character-image'>").attr("src", character.imageUrl);
-    var charHealth = $("<div class='character-health'>").text(character.health);
-    charDiv.append(charName).append(charImage).append(characterHealth);
-    $(renderArea).append(charDiv);
-    
-    if (makeChar == 'enemy') {
-        $(charDiv).addClass('enemy');
-    } else if (makeChar == 'defender') {
-        defender = character;
-        $(charDiv).addClass('target-enemy');
-    }
-};
